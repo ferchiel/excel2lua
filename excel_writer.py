@@ -9,7 +9,6 @@ class Excel_writer():
 	__table = 0
 
 	def __init__(self, output_file):
-		print(output_file)
 		aname = output_file
 		_path = ''
 		idx = aname.rfind('/')

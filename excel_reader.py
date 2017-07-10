@@ -68,6 +68,8 @@ class Excel_reader:
 		sheet = self.__sheets[self.__cur_sheet]
 		_value = sheet.cell_value(self.__cur_row, self.__cur_col)
 		_type = sheet.cell_type(self.__cur_row, self.__cur_col)
+		if _type == xlrd.XL_CELL_EMPTY or _value == '':
+			return
 		if (_type == xlrd.XL_CELL_NUMBER or _type == xlrd.XL_CELL_DATE) and int(_value) == _value:
 			_value = int(_value)
 		return _value
@@ -82,6 +84,8 @@ class Excel_reader:
 
 		_value = sheet.cell_value(self.__cur_row, self.__cur_col)
 		_type = sheet.cell_type(self.__cur_row, self.__cur_col)
+		if _type == xlrd.XL_CELL_EMPTY or _value == '':
+			return
 		if (_type == xlrd.XL_CELL_NUMBER or _type == xlrd.XL_CELL_DATE) and int(_value) == _value:
 			_value = int(_value)
 		return _value
@@ -96,6 +100,8 @@ class Excel_reader:
 
 		_value = sheet.cell_value(self.__cur_row, self.__cur_col)
 		_type = sheet.cell_type(self.__cur_row, self.__cur_col)
+		if _type == xlrd.XL_CELL_EMPTY or _value == '':
+			return
 		if (_type == xlrd.XL_CELL_NUMBER or _type == xlrd.XL_CELL_DATE) and int(_value) == _value:
 			_value = int(_value)
 		return _value
@@ -110,6 +116,8 @@ class Excel_reader:
 
 		_value = sheet.cell_value(row, col)
 		_type = sheet.cell_type(row, col)
+		if _type == xlrd.XL_CELL_EMPTY or _value == '':
+			return
 		if (_type == xlrd.XL_CELL_NUMBER or _type == xlrd.XL_CELL_DATE) and int(_value) == _value:
 			_value = int(_value)
 		return _value
@@ -125,7 +133,6 @@ class Excel_reader:
 			return
 		sheet = self.__sheets[self.__cur_sheet]
 		return sheet.nrows
-
 
 # var1 = Excel_reader("test.xlsx")
 # var1.sel_sheet(0)
