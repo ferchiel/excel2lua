@@ -27,7 +27,7 @@ def gen_line(reader, writer, line, key_tab, type_tab):
 		return
 	writer.table_beg(key, type_tab[conf.key_col])
 	reader.sel_col(0)
-	reader.sel_row(int(conf.start_row))
+	reader.sel_row(line)
 	value = reader.get()
 	if value:
 		writer.attribute(key_tab[0], value, type_tab[0])
