@@ -4,7 +4,7 @@
 import os
 import config
 import excel_reader
-import excel_writer
+import lua_writer
 
 import sys
 
@@ -29,13 +29,13 @@ def gen_line(reader, writer, line, key_tab, type_tab):
 	reader.sel_col(0)
 	reader.sel_row(line)
 	value = reader.get()
-	if value:
+	if value != None:
 		writer.attribute(key_tab[0], value, type_tab[0])
 	for idx in range(1, reader.get_ncols()):
 		key = key_tab[idx]
 		value = reader.next_col()
 		_type = type_tab[idx]
-		if value:
+		if value != None:
 			writer.attribute(key, value, _type)
 
 	writer.table_end()
@@ -72,6 +72,8 @@ def make_style_2(reader, writer):
 		writer.table_end()
 
 for filename in os.listdir(conf.inpath):
+	if filename.startswith('~$'):
+		continue
 	check = False
 	fullinpath = conf.inpath + filename
 	fulloutpath = conf.outpath + filename
@@ -86,7 +88,7 @@ for filename in os.listdir(conf.inpath):
 		continue
 
 	reader = excel_reader.Excel_reader(fullinpath)
-	writer = excel_writer.Excel_writer(fulloutpath)
+	writer = lua_writer.lua_writer(fulloutpath)
 
 	print('translate:\n' + fullinpath + '\noutput file:\n' + fulloutpath + '\n\n')
 	writer.write_beg()

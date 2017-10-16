@@ -2,11 +2,12 @@
 # coding=utf-8
 
 
-class Excel_writer():
+class lua_writer():
 	"""excel writer"""
 	__file = None
 	__name = None
 	__table = 0
+
 
 	def __init__(self, output_file):
 		aname = output_file
@@ -46,7 +47,7 @@ class Excel_writer():
 			name = str(name)
 			s += '[' + name + '] = {\n'
 		else:
-			print('MAKE ERROR! FILE: excel_writer.py  LINE: 40')
+			print('MAKE ERROR! FILE: lua_writer.py  LINE: 40')
 			exit(0)
 		self.__file.write(s)
 		self.__table += 1
@@ -72,8 +73,22 @@ class Excel_writer():
 		elif _type == 'str':
 			value = str(value)
 			s += '\'' + value + '\''
+		elif _type == 'ints':
+			s += '{ '
+			tab = str(value).split(',')
+			for v in tab:
+				s += v + ', '
+			s = s[: -2]
+			s += ' }'
+		elif _type == 'strs':
+			s += '{ '
+			tab = value.split('`')
+			for v in tab:
+				s += '\'' + v + '\', '
+			s = s[: -2]
+			s += ' }'
 		else:
-			print('MAKE ERROR! FILE: excel_writer.py  LINE: 62')
+			print('MAKE ERROR! FILE: lua_writer.py  LINE: 62')
 			exit(0)
 		s += ',\n'
 		self.__file.write(s)
