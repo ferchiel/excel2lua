@@ -87,6 +87,14 @@ class lua_writer():
 				s += '\'' + v + '\', '
 			s = s[: -2]
 			s += ' }'
+		elif _type == 'pos':
+			tab = value.split(',')
+			assert( len( tab ) == 2 )
+			s += '{ x = ' + tab[0] + ', y = ' + tab[1] + ' }'
+		elif _type == 'rect':
+			tab = value.split(',')
+			assert( len( tab ) == 4 )
+			s += '{ x = ' + tab[0] + ', y = ' + tab[1] + ', w = ' + tab[2] + ', h = ' + tab[3] + ' }'
 		else:
 			print('MAKE ERROR! FILE: lua_writer.py  LINE: 62')
 			exit(0)
