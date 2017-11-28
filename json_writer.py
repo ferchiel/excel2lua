@@ -27,17 +27,17 @@ class json_writer():
 
 	def _line(self):
 		if self.__insert_line:
-			self.__file.write(',\n')
+			self.__file.write(',\r\n')
 
 	def write_beg(self):
 		self.__table += 1
-		s = '{\n'
+		s = '{\r\n'
 		self.__file.write(s)
 		self.__insert_line = False
 
 	def write_end(self):
 		self.__table -= 1
-		s = '\n}'
+		s = '\r\n}'
 		self.__file.write(s)
 
 	def table_beg(self, name, _type):
@@ -46,14 +46,13 @@ class json_writer():
 		for x in range(self.__table):
 			s += '\t'
 
-		s += '"' + str(name) + '" : {\n'
+		s += '"' + str(name) + '" : {\r\n'
 		self.__file.write(s)
 		self.__table += 1
 		self.__insert_line = False
 
 	def table_end(self):
-		self._line()
-		s = ''
+		s = '\r\n'
 		for x in range(self.__table - 1):
 			s += '\t'
 		s += '}'
@@ -100,6 +99,5 @@ class json_writer():
 		else:
 			print('MAKE ERROR! FILE: lua_writer.py  LINE: 62')
 			exit(0)
-		# s += ',\n'
 		self.__file.write(s)
 		self.__insert_line = True
