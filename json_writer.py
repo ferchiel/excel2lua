@@ -65,7 +65,7 @@ class json_writer():
 		s = ''
 		for x in range(self.__table):
 			s += '\t'
-		s += '"' + key + '" : '
+		s += '"' + str(key) + '" : '
 		if _type == 'int':
 			if int(value) == value:
 				value = int(value)

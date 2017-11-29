@@ -71,6 +71,39 @@ def make_style_2(reader, writer):
 		gen_sheet(reader, writer)
 		writer.table_end()
 
+def make_global_config(reader, writer):
+	reader.sel_sheet(0)
+	_line = 2
+	reader.sel_row(_line)
+	for idx in range(2, reader.get_ncols()):
+		reader.sel_col(0)
+		_key = reader.get()
+		reader.sel_col(1)
+		_type = reader.get()
+		reader.sel_col(2)
+		_value = reader.get()
+		if not _key or not _type or not _value:
+			break
+		writer.attribute(_key, _value, _type)
+		_line += 1
+		reader.sel_row(_line)
+
+def make_error_code(reader, writer):
+	reader.sel_sheet(0)
+	_line = 1
+	reader.sel_row(_line)
+	for idx in range(1, reader.get_ncols()):
+		reader.sel_col(0)
+		_key = reader.get()
+		reader.sel_col(1)
+		_value = reader.get()
+		if not _key or not _value:
+			break
+		writer.attribute(_key, _value, 'int')
+		_line += 1
+		reader.sel_row(_line)
+
+
 for filename in os.listdir(conf.inpath):
 	if filename.startswith('~$'):
 		continue
@@ -92,7 +125,12 @@ for filename in os.listdir(conf.inpath):
 
 	print('translate:\n' + fullinpath + '\noutput file:\n' + fulloutpath + '\n\n')
 	writer.write_beg()
-	eval('make_style_' + conf.style)(reader, writer)
+	if filename == 'System.xlsx':
+		make_global_config(reader, writer)
+	elif filename == 'ErrorCode.xlsx':
+		make_error_code(reader, writer)
+	else:
+		eval('make_style_' + conf.style)(reader, writer)
 	writer.write_end()
 
 	del reader
