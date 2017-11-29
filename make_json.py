@@ -72,21 +72,28 @@ def make_style_2(reader, writer):
 		writer.table_end()
 
 def make_global_config(reader, writer):
-	reader.sel_sheet(0)
-	_line = 2
-	reader.sel_row(_line)
-	for idx in range(2, reader.get_ncols()):
-		reader.sel_col(0)
-		_key = reader.get()
-		reader.sel_col(1)
-		_type = reader.get()
-		reader.sel_col(2)
-		_value = reader.get()
-		if not _key or not _type or not _value:
-			break
-		writer.attribute(_key, _value, _type)
-		_line += 1
+	_tab = 0
+	reader.sel_sheet(_tab)
+	for _idx in range(reader.len_sheet()):
+		_sname = reader.sheet_name()
+		writer.table_beg(_sname, 'str')
+		_line = 2
 		reader.sel_row(_line)
+		for idx in range(2, reader.get_ncols()):
+			reader.sel_col(0)
+			_key = reader.get()
+			reader.sel_col(1)
+			_type = reader.get()
+			reader.sel_col(2)
+			_value = reader.get()
+			if not _key or not _type or not _value:
+				break
+			writer.attribute(_key, _value, _type)
+			_line += 1
+			reader.sel_row(_line)
+		writer.table_end()
+		_tab += 1
+		reader.sel_sheet(_tab)
 
 def make_error_code(reader, writer):
 	reader.sel_sheet(0)
